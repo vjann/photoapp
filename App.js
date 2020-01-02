@@ -9,9 +9,9 @@
 import React, {Component} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 import firebase from 'react-native-firebase';
-import { useForm } from 'react-hook-form'
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
+import UserFormComponent from './UserFormComponent.js';
 
 import {
   SafeAreaView,
@@ -19,6 +19,7 @@ import {
   ScrollView,
   View,
   Text,
+  Button,
   StatusBar,
   TouchableOpacity,
   AsyncStorage,
@@ -107,9 +108,8 @@ class HomeScreen extends Component<{}> {
         <Text>
         Current Picture {this.state.progress} % uploaded, {this.state.numPhotosTotal - this.state.numPhotosDone} left
         </Text>
-
-
-        <TouchableOpacity style={{backgroundColor:'green', padding:10, margin:10}} onPress={this.imgPicker}>
+        <Button title = "userform" onPress = {() => this.props.navigation.navigate("UserInfoForm")} color='blue'/>
+        <TouchableOpacity style={styles.touchableOpacityButton} onPress={this.imgPicker}>
           <Text>Select Image!</Text>
         </TouchableOpacity>
       </View>
@@ -117,20 +117,14 @@ class HomeScreen extends Component<{}> {
   }
 }
 
-class UserForm extends Component<{}> {
-  render(){
-    <Text>uwu</Text>
-  }
-
-}
 const MainNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
-  UserInfoForm: {screen: UserForm},
+  UserInfoForm: {screen: UserFormComponent},
   },
   {
     initialRouteName: 'Home'
   }
-  );
+);
 
 const App = createAppContainer(MainNavigator);
 
@@ -142,5 +136,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.lighter,
+  },
+  touchableOpacityButton: {
+    backgroundColor:'green',
+    padding:10,
+    margin:10
   }
 });
